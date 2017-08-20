@@ -11,14 +11,17 @@ public class GameScript : MonoBehaviour
     public GameObject[] particleEffects;
     public Canvas canvas;
     public Text scoreText;
-    public GameObject gameOverPanel; 
+  
+    public GameObject gameOverPanel, nextlevl,donationscreen; 
     private AudioSource audioSource;
     private int score;
+   
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         score = 0;
+        
     }
     //bool isClicked;
     void Update()
@@ -35,6 +38,17 @@ public class GameScript : MonoBehaviour
         {
             gameOverPanel.active = true;
             Time.timeScale = 0;
+        }
+
+
+        if (score == 10)
+        {
+            if (SceneManager.GetActiveScene().name != "Main")
+                nextlevl.SetActive(true);
+            else
+            {
+                donationscreen.SetActive(true);
+            }
         }
 
     }
@@ -76,6 +90,17 @@ public class GameScript : MonoBehaviour
         Time.timeScale = 1;
         Timer.isGameOver = false;
         Timer.TimeLeft = 60f;
+        score = 0;
+    }
+
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene("Main");
+        Time.timeScale = 1;
+        Timer.isGameOver = false;
+        Timer.TimeLeft = 60f;
+        score = 0;
     }
 }
 
